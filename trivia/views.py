@@ -77,7 +77,7 @@ def correr_preguntas(req, trivia_id):
         partida.save()
         
         
-    if numero_pregunta < 9:
+    if numero_pregunta < 10:
         pregunta, respuestas_incorrectas, respuesta_correcta = parsear_json_preguntas(partida.data_api, numero_pregunta)
 
         ctx = {

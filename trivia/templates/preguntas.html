@@ -1,42 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trivia</title>
-</head>
-<body>
-    
+{% extends "base.html" %}
+{% block content %}
 
-    <p>{{partida}}</p>
+    <div class='preguntas'>
 
-    <form method="post" action="{% url 'correr_preguntas' trivia_id=partida.id %}">
-        {% csrf_token %}
         <p>{{numero_pregunta}} </p>
-        <h4>{{ pregunta }}</h4>
+
+        <form method="post" action="{% url 'correr_preguntas' trivia_id=partida.id %}">
+            {% csrf_token %}
+            
+            <h5 class="mb-3">{{ pregunta }}</h5>
+            
+            {% for respuesta_incorrecta in respuestas_incorrectas %}
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="radio" name="respuesta" id="incorrecta_{{ forloop.counter }}" value="{{ respuesta_incorrecta }}" onclick="selectAnswer(this)">
+                <label class="form-check-label" for="incorrecta_{{ forloop.counter }}">
+                    {{ respuesta_incorrecta }}
+                </label>
+            </div>
+            {% endfor %}
         
-        {% for respuesta_incorrecta in respuestas_incorrectas %}
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="respuesta" id="incorrecta_{{ forloop.counter }}" value="{{ respuesta_incorrecta }}">
-            <label class="form-check-label" for="incorrecta_{{ forloop.counter }}">
-                {{ respuesta_incorrecta }}
-            </label>
-        </div>
-        {% endfor %}
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="radio" name="respuesta" id="correcta" value="{{ respuesta_correcta }}" checked onclick="selectAnswer(this)">
+                <label class="form-check-label" for="correcta">
+                    {{ respuesta_correcta }}
+                </label>
+            </div>
+        
+            <button type="submit" class="btn btn-success btn-lg">Send reply</button>
+        </form>
+        
+        
+    </div>
     
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="respuesta" id="correcta" value="{{ respuesta_correcta }}" checked>
-            <label class="form-check-label" for="correcta">
-                {{ respuesta_correcta }}
-            </label>
-        </div>
     
-        <button type="submit" class="btn btn-primary">Enviar respuesta</button>
-    </form>
-    
+    {% endblock content %}
 
 
-
-
-</body>
-</html>

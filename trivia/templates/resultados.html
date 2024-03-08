@@ -1,34 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trivia</title>
-</head>
-<body>
+{% extends "base.html" %}
+    
+{% block content %}
+
+<div class='preguntas'>
+
+
+
+    <ul style="list-style-type: none;">
+        {% for partida in mejores_partidas %}
+        <p>{{ partida.jugador }} &nbsp; with &nbsp; {{ partida.aciertos }} &nbsp; successes!</p>
+        {% endfor %}
+    </ul>
     
 
-    <ul>
-    {% for partida in mejores_partidas %}
-
-        <li>{{partida.jugador}}   -   {{partida.aciertos}}</li>
-
-    {% endfor %}
-    </ul>
-
     {% if record %}
-    <h5>Estas dentro de los 6 mejores jugando en la categoria : {{partida.categoria}} </h5>
+    <h5>¡Fantastic!</h5>
+    <h5>You are among the 6 best playing in the category</h5>
+    <p>{{partida.categoria}}</p>
     
     {% else %}
 
-    <h5>Tus resultados:</h5>
+    <h5>Your results:</h5>
 
-    <p>{{partida.jugador}} <br>
-        {{partida.aciertos}}
-    </p>
+    <p>{{ partida.jugador }} &nbsp; with &nbsp; {{ partida.aciertos }} &nbsp; successes!</p>
 
     {% endif %}
 
+    <a class="btn btn-success btn-lg" href="{% url "inicio" %}">Play again</a>
 
-</body>
-</html>
+</div>
+
+{% endblock content %}
+    
+
+

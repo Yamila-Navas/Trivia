@@ -5,3 +5,7 @@ class Trivia_form(forms.ModelForm):
     class Meta:
         model = Trivia
         exclude = ('tiempo_inicial','tiempo_final','aciertos', 'data_api', 'preguntas_contestadas')
+        labels={
+            'jugador':'Player',
+            'categoria':'Category'
+        }
