@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia</title>
+</head>
+<body>
+    
+
+    <ul>
+    {% for partida in mejores_partidas %}
+
+        <li>{{partida.jugador}}   -   {{partida.aciertos}}</li>
+
+    {% endfor %}
+    </ul>
+
+    {% if record %}
+    <h5>Estas dentro de los 6 mejores jugando en la categoria : {{partida.categoria}} </h5>
+    
+    {% else %}
+
+    <h5>Tus resultados:</h5>
+
+    <p>{{partida.jugador}} <br>
+        {{partida.aciertos}}
+    </p>
+
+    {% endif %}
+
+
+</body>
+</html>
