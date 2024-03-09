@@ -17,13 +17,14 @@
     <h5>¡Fantastic!</h5>
     <h5>You are among the 6 best playing in the category</h5>
     <p>{{partida.categoria}}</p>
+    <p>Time:&nbsp; {{duracion}}</p>
     
     {% else %}
 
     <h5>Your results:</h5>
 
     <p>{{ partida.jugador }} &nbsp; with &nbsp; {{ partida.aciertos }} &nbsp; successes!</p>
-
+    <p>Time:&nbsp; {{duracion}}</p>
     {% endif %}
 
     <a class="btn btn-success btn-lg" href="{% url "inicio" %}">Play again</a>

@@ -1,8 +1,10 @@
+from django.utils import timezone
 from .models import Trivia
 from .forms import Trivia_form
 from django.shortcuts import redirect, render
 from .trivia_api import obtener_preguntas, parsear_json_preguntas
 import json
+
 
 
 
@@ -90,12 +92,24 @@ def correr_preguntas(req, trivia_id):
         return render(req, 'preguntas.html', ctx)
     
     else:
+
+        fecha_actual = timezone.now()
+
         
+        duracion = fecha_actual - partida.tiempo_inicial
+
+        partida.tiempo_final = duracion
+        partida.save()
+
+        duracion_formateada = str(duracion).split('.')[0]
+
+
         mejores_partidas = Trivia.objects.filter(categoria=partida.categoria).order_by('-aciertos')[:6]
-        
+
         ctx = {
             'aciertos': partida.aciertos,
             'partida': partida,
+            'duracion': duracion_formateada,
             'mejores_partidas' : mejores_partidas
         }
 

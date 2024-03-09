@@ -12,7 +12,7 @@ class Trivia(models.Model):
     jugador = models.CharField(max_length=20, blank=False, null=False)
     categoria = models.ForeignKey(Categorias, on_delete=models.CASCADE)
     tiempo_inicial = models.DateTimeField(auto_now_add=True)
-    tiempo_final = models.DateTimeField(null=True, blank=True)
+    tiempo_final = models.DurationField(null=True, blank=True)
     aciertos = models.PositiveIntegerField(default=0)
     preguntas_contestadas = models.IntegerField(default=0)
     data_api = models.JSONField(default=None)
