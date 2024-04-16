@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<div class='fondo container text-center' >
+    <div class='row justify-content-center align-items-center'>
+        <img src="{% static 'trivia.png' %}" alt="Descripción de la imagen">
+    </div>
+    <div class='input-options justify-content-center align-items-center'>
+        
+        <button class='btn-green' >Jugar</button>
+        
+        <button class='btn-green' >Para desarrolladores</button>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+
+{% block scripts %}
+
+{% endblock scripts %}

@@ -1,5 +1,8 @@
 
-
+/* oculta el formulario de envio de cantidad de aciertos */
+#integer-form{
+    display: none;
+}
 
 
 .form-inicio{
@@ -32,4 +35,70 @@
     border-color: #1e7e34;
 }
 
+.answer_list {
+    list-style-type: none;
+}
 
+                
+.answer_list li button {
+    text-decoration: none;
+    margin: 10px;
+}
+
+/* boton de copiar url */
+#copy-button {
+    background-color: #4CAF50; /* Verde */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+/* fondo de el juego*/
+.fondo {
+    width: 800px; /* Ancho específico */
+    height: 600px; /* Largo específico */
+    background-image: url("media/fondo.png");
+    background-repeat: no-repeat;
+    background-size: 700px 500px; /* Ajusta el tamaño de la imagen de fondo */
+
+}
+
+/* opciones de entrada: jugar/ para desarrolladores */
+.input-options {
+    display: flex; 
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+
+/* boton verde */
+.btn-green {
+  background-color: #c2fbd7;
+  border-radius: 100px;
+  box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+  color: green;
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-bottom: 15px;
+}
+
+.btn-green:hover {
+  box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+  transform: scale(1.05) rotate(-1deg);
+}

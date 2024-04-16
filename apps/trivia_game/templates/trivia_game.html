@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+    <div  class='form-inicio '>
+        <form action="{% url "start-game" %}" method='POST' novalidate> 
+            {% csrf_token %}
+            {{form|crispy}}
+            <input class='btn btn-success' type="submit" value="Start Game">
+        </form>
+    </div>
+
+
+{% endblock content %}
