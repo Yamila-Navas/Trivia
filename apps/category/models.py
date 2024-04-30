@@ -7,7 +7,6 @@ class Category(models.Model):
     
     name = models.CharField(max_length=200, unique=True) #no podran haver duplicados de nombre
     slug = models.SlugField(max_length=200, unique=True) #el slug es parte de la url
-    parent = models.ForeignKey("self", related_name="children", on_delete=models.CASCADE, blank=True, null=True) #nos permitiria tener subcategorias si deceamos
     games = models.PositiveIntegerField(default=0, blank=True, null=True) # modelo para analiticas
 
     def __str__(self):

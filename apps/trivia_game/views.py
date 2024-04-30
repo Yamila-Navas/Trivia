@@ -85,6 +85,11 @@ class ResultsGameView(View):
         game.successes = correct_answers
 
         game.save()
+
+        # Elimina todas aquellas partidas que no llegaron a tu termino para que no
+        # las incluya en el ranking de partidas completadas
+        incomplete_games = Trivia_game.objects.filter(time__isnull=True)
+        incomplete_games.delete()
     
         # aqui busco un rankin de las 6 mejores partidas, pero por el momento no estoy contemplando 
         # que los usuarios se van a estar repitiendo con el mismo nombre.
