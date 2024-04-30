@@ -78,9 +78,9 @@
             <div class="answers">
                 <div class="form-check mb-3">
                     <ul class='answer_list'>
-                        <li><button class='button-28' onclick="checkAnswer('${question.options[0]}', '${question.correct_answer}')">${question.options[0]}</button></li>
-                        <li><button class='button-28' onclick="checkAnswer('${question.options[1]}', '${question.correct_answer}')">${question.options[1]}</button></li>
-                        <li><button class='button-28' onclick="checkAnswer('${question.options[2]}', '${question.correct_answer}')">${question.options[2]}</button></li>
+                        <li><button class='button-28 one' onclick="checkAnswer('${question.options[0]}', '${question.correct_answer}', 'one')">${question.options[0]}</button></li>
+                        <li><button class='button-28 two' onclick="checkAnswer('${question.options[1]}', '${question.correct_answer}', 'two')">${question.options[1]}</button></li>
+                        <li><button class='button-28 three' onclick="checkAnswer('${question.options[2]}', '${question.correct_answer}', 'three')">${question.options[2]}</button></li>
                     </ul>
                 </div>
                 <br>
@@ -112,12 +112,15 @@
         document.getElementById('timer').innerText = `Tiempo restante: ${timeLeft} segundos`;
     }
 
-    function checkAnswer(selectedAnswer, correctAnswer) {
+    function checkAnswer(selectedAnswer, correctAnswer, button) {
         clearInterval(timerInterval); // Detener el temporizador
+
         if (selectedAnswer === correctAnswer) {
             correctAnswers++;
+
             alert("¡Respuesta correcta!");
         } else {
+
             alert("Respuesta incorrecta. La respuesta correcta es: " + correctAnswer);
         }
         nextQuestion();
