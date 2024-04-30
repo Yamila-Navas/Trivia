@@ -1,35 +1,187 @@
+/* estilo de las preguntas */
+.question{
+  color: white;
+  text-shadow: 1px 1px 1px black; /* Sombras negras */
+  text-align: center; /* Centra el contenido del div */
+}
 
-
-
-
-.form-inicio{
-    width:50%; 
-    padding: 50px; 
-    margin: 50px;
-    border: 1px solid gray;
+/* oculta el formulario de envio de cantidad de aciertos */
+#integer-form{
+    display: none;
 }
 
 
-.preguntas{
-    width:65%; 
-    padding: 50px; 
-    margin: 50px;
-    border: 1px solid gray;
+/*estilos de las respuestas*/
+.answers{
+  text-align: center; /* Centra el contenido del div */
+
+}
+
+/*formatea la lista de las respuestas*/
+.answer_list {
+    list-style-type: none;
+}
+.answer_list li  {
+  
+  margin-right: 70px; 
+
+}
+.answer_list li button {
+    text-decoration: none;
+    margin: 10px;
+    
+
 }
 
 
-.form-check-label {
-    font-size: 16px;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*------------------------------------------------------BOTONES---------------------------------*/
+
+/* Boton amarillo */
+.button-28 {
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #feb900;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #feb900;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  will-change: transform;
 }
 
-.btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
+.button-28:disabled {
+  pointer-events: none;
 }
 
-.btn-success:hover {
-    background-color: #218838;
-    border-color: #1e7e34;
+.button-28:hover {
+  color: #fff;
+  background-color: #feb900;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
 }
+
+.button-28:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.button-28.correct {
+  background-color: green;
+  color: white;
+}
+
+.button-28.incorrect {
+  background-color: red;
+  color: white;
+}
+
+
+
+
+/*------------------------------------------------------FIN-BOTONES---------------------------------*/
+
+/* Tabla de resultados del juego*/
+
+.container-table {
+  border: solid 1px rgba(255, 255, 255, 0.2);
+  margin-top: 20px; /*90*/
+}
+
+table {
+  color: #fff;
+  font-size: 14px;
+  table-layout: fixed;
+  border-collapse: collapse;
+  width: 100%; /* Hacer que la tabla ocupe todo el ancho del contenedor */
+}
+
+thead {
+  background: rgba(243, 140, 210, 0.4);
+}
+
+th {
+  padding: 20px 15px ;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 15px;
+  border-bottom: solid 1px rgba(255, 255, 255, 0.2);
+}
+
+
+tbody tr {
+  cursor: pointer;
+}
+
+tbody tr:hover {
+  background: rgba(243, 103, 199, 0.4);
+}
+
+/*-------------------- Fin Tabla de resultados del juego------------*/
+
+
+/* Fondo de los resultados -----------------------------------------*/
+#results {
+  position: relative;
+  background-image: url('assets/img/fondo-celestial.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 653px;
+}
+
+.results::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.68); /* Color de fondo con opacidad */
+  mix-blend-mode: multiply; /* Aplica el modo de mezcla para oscurecer */
+}
+
+.results .container-table {
+  position: relative;
+  z-index: 1; /* Asegura que la tabla esté por encima del pseudo-elemento */
+}
+
+/* Fin fondo de los resultados -----------------------------------------*/
+
+
+/* Formulario de API ---------------------------------------------------*/
 
 

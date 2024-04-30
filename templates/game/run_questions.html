@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %} 
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static "assets/img/fondo-celestial.jpg" %}');">
+      <div id="question-container" class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <!-- Aquí se mostrarán las preguntas -->
+
+      </div>
+    </div><!-- End Breadcrumbs -->
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row gy-4">
+
+            <div class="container">
+                <div id="answers-container" >
+               
+                    <!-- Aquí se mostrarán las respuestas -->
+                    
+                </div>
+            
+                <!-- Agrego este formulario para pasar los aciertos de la partida a la vista -->
+                <form id="integer-form"  method='POST' action="{% url 'results-game' game_id=game.id %}">
+                    {% csrf_token %}
+                    <input type="number" id="integer-input" name="integer" required>
+                    <button type="submit"></button>
+                </form>
+                
+                
+            </div>
+        
+        </div>
+      </div>
+    </section>
+
+{% endblock content %}
+    
+
+
+{% block scripts %} 
+  <script>
+    var questions = {{ questions|safe }};
+
+    console.log(questions)
+
+    var currentQuestionIndex = 0;
+    var correctAnswers = 0;
+    var timerInterval;
+    var timeLimit = 60; // Tiempo límite de respuesta en segundos
+    // Seleccionar el formulario y el campo de entrada
+    var form = document.getElementById('integer-form');
+    var input = document.getElementById('integer-input');
+    var questionContainer = document.getElementById('question-container');
+    var answersContainer = document.getElementById('answers-container');
+    
+
+    function displayQuestion(question) {
+        var questionHTML = `
+            <div class="question">
+                <h4>${question.index}</h4>
+                <h3 class="mb-3">${question.ask}</h3>
+                
+            </div>
+            
+        `;
+        var answersHTML = `
+            <div class="answers">
+                <div class="form-check mb-3">
+                    <ul class='answer_list'>
+                        <li><button class='button-28 one' onclick="checkAnswer('${question.options[0]}', '${question.correct_answer}', 'one')">${question.options[0]}</button></li>
+                        <li><button class='button-28 two' onclick="checkAnswer('${question.options[1]}', '${question.correct_answer}', 'two')">${question.options[1]}</button></li>
+                        <li><button class='button-28 three' onclick="checkAnswer('${question.options[2]}', '${question.correct_answer}', 'three')">${question.options[2]}</button></li>
+                    </ul>
+                </div>
+                <br>
+                <p id="timer"></p>
+                
+            </div>
+            
+            
+        `;
+        questionContainer.innerHTML = questionHTML;
+        answersContainer.innerHTML = answersHTML;
+        startTimer();
+    }
+
+    function startTimer() {
+        var timeLeft = timeLimit;
+        updateTimerDisplay(timeLeft);
+        timerInterval = setInterval(function() {
+            timeLeft--;
+            updateTimerDisplay(timeLeft);
+            if (timeLeft === 0) {
+                clearInterval(timerInterval);
+                nextQuestion();
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay(timeLeft) {
+        document.getElementById('timer').innerText = `Tiempo restante: ${timeLeft} segundos`;
+    }
+
+    function checkAnswer(selectedAnswer, correctAnswer, button) {
+        clearInterval(timerInterval); // Detener el temporizador
+
+        if (selectedAnswer === correctAnswer) {
+            correctAnswers++;
+
+            alert("¡Respuesta correcta!");
+        } else {
+
+            alert("Respuesta incorrecta. La respuesta correcta es: " + correctAnswer);
+        }
+        nextQuestion();
+    }
+
+    function nextQuestion() {
+        clearInterval(timerInterval); // Asegurarse de que el temporizador se detenga
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            displayQuestion(questions[currentQuestionIndex]);
+        } else {
+            // Establecer el valor del campo de entrada a los asiertos del jugador
+            input.value = correctAnswers;
+
+            // Enviar el formulario programáticamente
+            form.submit();
+            //alert(`Has respondido ${correctAnswers} preguntas correctamente.`);
+        }
+    }
+
+    // Comenzar mostrando la primera pregunta
+    displayQuestion(questions[currentQuestionIndex]);
+    </script>
+{% endblock scripts %}
