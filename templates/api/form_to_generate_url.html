@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %} 
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('{% static "assets/img/fondo-celestial.jpg" %}');">
+      <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+        
+        <h2>API Trivia Game</h2>
+
+      </div>
+    </div><!-- End Breadcrumbs -->
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row gy-4">
+            
+            <div class="container-doc">
+                <p class="alert alert-warning">La API de la trivia de preguntas y respuestas proporciona un conjunto de endpoints para interactuar con las preguntas almacenadas en la base de datos. Cada pregunta consta de un texto de pregunta (ask), tres opciones de respuesta (option_one, option_two, option_three), y la respuesta correcta (correct_answer). Además, cada pregunta está asociada a una categoría a través de una relación de clave externa (category).</p>
+                <p class="alert alert-warning mt-3">
+                    Ten en cuenta que:<br>
+                    Sólo 1 Categoría se puede solicitar por llamada API. Para obtener preguntas de cualquier categoría, no especifique una categoría.<br>
+                    Una cantidad de 50 preguntas se puede recuperar por llamada.
+                </p>
+            </div>
+            
+
+            <form action="{% url 'generate-url' %}" method="post" class="row g-3">
+                {% csrf_token %}
+                <div class="col-md-5">
+                    <label for="category" class="form-label">Elige la categoría:</label>
+                    <select name="category" id="category" class="form-select" aria-label="Seleccionar categoría" required>
+                        {% for category in categories %}
+                            <option value="{{ category.slug }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <label for="quantity" class="form-label">Cantidad de preguntas:</label>
+                    <input type="number" id="quantity" name="quantity" class="form-control" required>
+                </div>
+                <div class="col-md-2 ">
+                    <button type="submit" class="button-28 mt-3">Generar URL</button>
+                </div>
+            </form>
+            
+            {% if url %}
+            <div class="d-flex">
+                <button id="copy-button" class="btn btn-warning btn-sm align-self-start h-100"><i class="bi bi-clipboard"></i></button>
+                <p id="url-to-copy" class="alert alert-warning align-self-center flex-grow-1 mb-0">{{ url }}</p> 
+            </div>
+            {% endif %}
+            
+            
+        
+        
+        </div>
+      </div>
+    </section>
+  </main>
+{% endblock content %}
+
+
+{% block scripts %}
+<script>
+    document.getElementById('copy-button').addEventListener('click', function() {
+        var urlToCopy = document.getElementById('url-to-copy').innerText;
+        var tempInput = document.createElement('input');
+        tempInput.style = "position: absolute; left: -1000px; top: -1000px";
+        tempInput.value = urlToCopy;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        //alert('URL copiada al portapapeles!');
+    });
+</script>
+{% endblock scripts %}
+    

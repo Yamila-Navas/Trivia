@@ -6,8 +6,13 @@ class Trivia_form(forms.ModelForm):
         model = Trivia_game
         exclude = (
                     'initial_time',
-                    'final_time',
+                    
                     'successes',
-                    'answered_questions',
+                    
+                    'time'
                     )
+        labels = {
+            'player' : 'Tu nombre',
+            'category' : 'Elige una categoria'
+        }
         

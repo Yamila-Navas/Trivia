@@ -23,6 +23,18 @@ class FillDatabaseView(APIView):
             return Response({'message': f'Ocurrió un error al cargar las preguntas: {e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+class DeleteView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        questions = Question.objects.all()
+        questions.delete()
+        
+        
+        return Response({'message': f'Delete questions'}, status=status.HTTP_200_OK)
+
+
+
 class ListQuestionsView(APIView):
     '''
     listara tosas las preguntas que existen en la base de datos.
@@ -72,6 +84,7 @@ class ListQuestionsByCategoryView(APIView):
 
         except Exception as e:
             return Response({'message': f'An error occurred while loading questions: {e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 
 

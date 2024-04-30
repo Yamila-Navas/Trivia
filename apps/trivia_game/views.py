@@ -16,19 +16,18 @@ import pandas as pd
 
 class StartGameView(View):
     '''
-    esta vista muestra un formulario en la página inicial (trivia_game.html),
+    esta vista muestra un formulario en la página inicial (form_entrada.html),
     procesa los datos del formulario cuando se envía e inicia el juego
     de la categoría seleccionada en el formulario.
     '''
     def get(self, request):
         form = Trivia_form()
-        return render(request, 'trivia_game.html', {'form':form})
+        return render(request, 'game/form_entrada.html', {'form':form})
     
     def post(self, request):
         form = Trivia_form(request.POST)
 
         if form.is_valid():
-            game = form.save()
 
             # Aquí capturas los datos del formulario
             player = form.cleaned_data['player']
@@ -43,19 +42,21 @@ class StartGameView(View):
                 trivia_game = Trivia_game(player=player, category=form.cleaned_data['category'])
                 trivia_game.save()
 
+                print(questions)
+
                 context = {
                     'game':trivia_game,
                     'questions':questions
                 }
 
-                return render(request, 'run_questions.html', context)
+                return render(request, 'game/run_questions.html', context)
 
             else:
                 # Si la solicitud no fue exitosa, manejo el error apropiadamente
                 return HttpResponse('HTTP request error', status=response.status_code)
 
         else:
-            return render(request, 'trivia_game.html', {'form': form})
+            return render(request, 'game/form_entrada.html', {'form': form})
             
 
 
@@ -72,46 +73,25 @@ class ResultsGameView(View):
         game = get_object_or_404(Trivia_game, id=game_id)
 
         # aca gurdo la fecha y hora actual para luego calcular el tiempo de duracion de la partida
+        # luego formateo la duracion de la partida para que solo gurde el el tiempo que le tomo completar la partida
         current_date = timezone.now()
         duration = current_date - game.initial_time #
-        
-        print('time: ',duration)
-
+        formatted_duration = str(duration).split('.')[0]
+        game.time = formatted_duration
 
         # aca estoy recolectando la cantidad de haciertos del jugador 
+        # luego guardo la cantidad de aciertos del jugador 
         correct_answers = int(request.POST.get("integer", 0))
-
-        # aca estoy guardando la cantidad de aciertos del jugador 
         game.successes = correct_answers
-        
+
         game.save()
-
-        # aqui como ya tendremos una jugada realizada por un usuario
-        # guardamos que se eligio esta categoria y la direccion ip del usuario.
-        address = request.META.get('HTTP_X_FORWARDED_FOR')
-        if address:
-            ip = address.split(',')[-1].strip()
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-
-        if not GameCount.objects.filter(category=game.category, ip_address=ip):
-            play_made = GameCount(category=game.category, ip_address=ip)
-            play_made.save()
-            #game.get_games_count()
-        
-        # aqui solo formateo la duracion de la partida para que pueda aparecer en el template
-        formatted_duration = str(duration).split('.')[0]
-
-        print('time formatiado: ', formatted_duration)
-        
-
+    
         # aqui busco un rankin de las 6 mejores partidas, pero por el momento no estoy contemplando 
         # que los usuarios se van a estar repitiendo con el mismo nombre.
         best_games = Trivia_game.objects.filter(category=game.category).order_by('-successes')[:6]
 
         context = {
-            'game': game,
-            'time': formatted_duration,
+            'game': game,       
             'best_games' : best_games
         }
 
@@ -119,7 +99,7 @@ class ResultsGameView(View):
             context['record'] = True
             
         
-        return render(request, 'results.html', context)
+        return render(request, 'game/results.html', context)
 
 
 

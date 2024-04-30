@@ -1,22 +1,22 @@
 from rest_framework import serializers
 from .models import Question
 from apps.category.serializers import CategorySerializer
-
+import random
 
 class QuestionsSerializers(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)  # Asegúrate de que este campo sea de solo lectura si no deseas permitir su modificación a través de este serializador
     
     # Campo adicional para el índice de la pregunta
     index = serializers.SerializerMethodField()
+    options = serializers.SerializerMethodField()
+    
     
     class Meta:
         model = Question
         fields = [
             'index',
             'ask',
-            'option_one',
-            'option_two',
-            'option_three',
+            'options',
             'correct_answer',
             'category',
         ]
@@ -25,11 +25,23 @@ class QuestionsSerializers(serializers.ModelSerializer):
         super().__init__(*args, **kwargs)
         self.question_index = 1  # Inicializamos el contador del índice de pregunta
     
+
     def get_index(self, obj):
         """
         Método para obtener el índice de la pregunta.
         """
         return self.question_index
+    
+
+    def get_options(self, obj):
+        """
+        Método para obtener las opciones de la pregunta como una lista.
+        """
+        op = [obj.option_one, obj.option_two, obj.option_three]
+        random.shuffle(op)
+
+        return op
+
     
     def to_representation(self, instance):
         """

@@ -12,7 +12,7 @@ class GenerateUrlApiView(View):
     '''
     def get(self, request):
         categories = Category.objects.all()
-        return render(request, 'form_to_generate_url.html', {'categories':categories})
+        return render(request, 'api/form_to_generate_url.html', {'categories':categories})
     
     def post(self, request):
         categories = Category.objects.all()
@@ -28,4 +28,4 @@ class GenerateUrlApiView(View):
             'url' : url
         }
 
-        return render(request, 'form_to_generate_url.html', context)
+        return render(request, 'api/form_to_generate_url.html', context)

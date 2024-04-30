@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %} 
+  <main id="main" >
+
+    <!-- ======= Results Section ======= -->
+    <section id="results" class="results section-bg" >
+      <div class="background-overlay"></div>
+      
+      <div class="container" data-aos="fade-up" >
+        <div class="row justify-content-center">
+          <div class="col-lg-7 text-center">
+            
+            <div class="container-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th colspan="4" class="text-center">
+                        {% if record %}
+                        Buena partida, estás entre los 6 mejores jugadores de la categoría {{game.category}}!
+                        {% else %}
+                        Record invictos categoria {{game.category}}
+                        {% endif %}
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>Jugador</th>
+                    <th>Aciertos</th>
+                    <th>Tiempo</th>
+                    <th>Fecha</th>
+                  </tr>
+                </thead>
+                
+                <tbody>
+                  {% for game in best_games %}
+                  <tr>
+                    <td>{{ game.player }}</td>
+                    <td>{{ game.successes }}</td>
+                    <td>{{ game.time|date:"H:i:s"  }}</td>
+                    <td>{{ game.initial_time|date:"d/m/Y" }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+  
+                {% if not record %}
+                <thead>
+                  <tr>
+                    <th colspan="4">Tus resultados</th>
+                  </tr>
+                </thead>
+  
+                <tbody>
+                  <tr>
+                    <td>{{ game.player }}</td>
+                    <td>{{ game.successes }}</td>
+                    <td>{{ game.time|date:"H:i:s"  }}</td>
+                    <td>{{ game.initial_time|date:"d/m/Y" }}</td>
+                  </tr>
+                </tbody>
+                {% endif %}
+              </table>
+            </div>
+  
+          </div> 
+        </div>
+      </div>
+    </section>
+  </main>
+
+{% endblock content %}

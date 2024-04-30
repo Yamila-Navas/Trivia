@@ -6,8 +6,7 @@ class Trivia_admin(admin.ModelAdmin):
                     'player',
                     'category',
                     'successes',
-                    'initial_time',
-                    'final_time',  
+                    'time'
                     )
     
 
